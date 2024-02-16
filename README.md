@@ -1,2 +1,4 @@
 # jquery-memory-game
-this is a memory game written in jquery for my it354 advanced web development class
+This is a Game written in JQuery and Utilizes JQuery UI.
+It is a memory game that involves matching cards to each other.
+There can be 8, 16, 24 or 48 cards. 
