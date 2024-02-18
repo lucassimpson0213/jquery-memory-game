@@ -5,6 +5,12 @@ $(document).ready(
     $('#tabs').tabs();
 
 })
+
+(function () {
+    $('#row1').hide();
+
+
+})
     
 
 
