@@ -3,4 +3,5 @@ $(document).ready(function () {
     
     $('#row1').hide();
     $('#row2').hide();
+    $('#row3').hide();
 });
