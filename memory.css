@@ -37,6 +37,10 @@ header p {
     padding-bottom: 3px;
     float: left; 
 }
+
+#cards {
+    height: 200px;
+}
 .clear {
     clear: both;
 }
