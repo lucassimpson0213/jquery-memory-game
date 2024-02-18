@@ -1,5 +1,5 @@
 $(document).ready(function () {
     $('#tabs').tabs();
     
-    $('.row1').hide();
+    $('#row1').hide();
 });
