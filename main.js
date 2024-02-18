@@ -1,17 +1,5 @@
-
-
-$(document).ready(
-(function () {
+$(document).ready(function () {
     $('#tabs').tabs();
-
-})
-
-(function () {
-    $('#row1').hide();
-
-
-})
     
-
-
-);
+    $('.row1').hide();
+});
