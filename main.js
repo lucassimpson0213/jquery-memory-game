@@ -5,12 +5,12 @@ $(document).ready(function () {
 
 
     $('#num_cards').on('change', function () {
-           var e =  $('#num_cards').val;
-           console.log(e);
+        var val = $(this).val();
+        console.log(val);
 
     })
 
 
-   
+
 });
 
