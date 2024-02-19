@@ -3,7 +3,7 @@ $(document).ready(function () {
     
 
 
-    let rows = new Map([
+    let rowsMap = new Map([
             [8, 1],
             [16, 2],
             [24, 3],
@@ -17,12 +17,18 @@ $(document).ready(function () {
 
 
     $('#num_cards').on('change', function () {
-        var val = $(this).val();
-        var numRows = rows.get(val);
-        var amtRows = getRows(rows);
+        var val = parseInt($(this).val(), 10);
+        var requiredRows = rowsMap.get(val)
+        
 
-        for(let i = 0; i <= amtRows; i++){
-            $(`#row${i}`).hide();
+        for(let i = 1; i <= 6; i++){
+            if(row <= requiredRows) 
+            {
+                $(`#rows${i}`).show();
+            } else {
+
+                $(`#rows${i}`).hide();
+            }
         }
 
 
@@ -32,8 +38,4 @@ $(document).ready(function () {
 
 });
 
-
-function getRows(cardsAmt) {
-    return 6 - cardsAmt;
-}
 
