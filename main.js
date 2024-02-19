@@ -24,10 +24,10 @@ $(document).ready(function () {
         for(let i = 1; i <= 6; i++){
             if(i <= requiredRows) 
             {
-                $(`#rows${i}`).show();
+                $(`#row${i}`).show();
             } else {
 
-                $(`#rows${i}`).hide();
+                $(`#row${i}`).hide();
             }
         }
 
