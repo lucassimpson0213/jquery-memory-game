@@ -22,7 +22,7 @@ $(document).ready(function () {
         
 
         for(let i = 1; i <= 6; i++){
-            if(row <= requiredRows) 
+            if(i <= requiredRows) 
             {
                 $(`#rows${i}`).show();
             } else {
