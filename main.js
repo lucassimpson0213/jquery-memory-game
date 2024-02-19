@@ -9,5 +9,6 @@ $(document).ready(function () {
     $('#row6').show();
 
     $('#row6').hide();
+    $('#row5').hide();
 });
 
