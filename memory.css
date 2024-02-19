@@ -39,7 +39,7 @@ header p {
 }
 
 #cards {
-    height: auto;
+    height: 600px;
     min-height: 200px;
 }
 .clear {
