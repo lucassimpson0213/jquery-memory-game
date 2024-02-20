@@ -34,8 +34,15 @@ $(document).ready(function () {
 
     })
 
+      $('a').each(function (index, element) {
+         console.log(`Jquery Element ${i}: \n \n ${element}`)
+      })
+        
+    });
+    console.log(value)
 
-    
+
+
 
 
 
