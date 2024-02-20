@@ -27,6 +27,11 @@ $(document).ready(function () {
         // Fixed variable in the template string from `i` to `index`
         console.log(`Jquery Element ${index}: \n \n`, element); // Also, separated the element from the template string for better logging
     });
+
+
+
+
+    
 });
 
 
