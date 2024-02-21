@@ -1,34 +1,29 @@
 $(document).ready(function () {
-    function addNameFromStorage() {
-        var storedPlayerName = sessionStorage.get('playerName');
-        if(storedPlayerName){
-            $('#player').text(`Player Name: ${storedPlayerName}`);
-        }
-        
-    }
-
-    addNameFromStorage();
+    // Initializes jQuery UI tabs
     function initTabs() {
         $('#tabs').tabs();
     }
 
-
-    function addName() {
-
-        let playerName = $('#player_name').val();
-
-        if (!playerName) {
-            alert('please enter your name!')
+    // Retrieves and displays the player's name from sessionStorage
+    function addNameFromStorage() {
+        var storedPlayerName = sessionStorage.getItem('playerName');
+        if (storedPlayerName) {
+            $('#player').text(`Player Name: ${storedPlayerName}`);
         }
-        else {
+    }
+
+    // Adds the player's name to sessionStorage and updates the display
+    function addName() {
+        let playerName = $('#player_name').val();
+        if (!playerName) {
+            alert('Please enter your name!');
+        } else {
             $('#player').text(`Player Name: ${playerName}`);
             sessionStorage.setItem('playerName', playerName);
         }
     }
 
-
-    
-
+    // Adjusts the visibility of rows based on the number of cards selected
     function adjustRowsVisibility(requiredRows) {
         for (let i = 1; i <= 6; i++) {
             if (i <= requiredRows) {
@@ -39,6 +34,7 @@ $(document).ready(function () {
         }
     }
 
+    // Updates the visibility of rows based on the selected number of cards
     function updateRowsVisibility() {
         let rowsMap = new Map([
             [8, 1],
@@ -54,16 +50,20 @@ $(document).ready(function () {
         adjustRowsVisibility(requiredRows);
     }
 
+    // Logs information about each anchor tag
     function logAnchorTags() {
         $('a').each(function (index, element) {
             console.log(`Jquery Element ${index}:`, element);
         });
     }
 
+    // Event listener for the Save Settings button
     $('#save_settings').click(function () {
         updateRowsVisibility();
         addName();
     });
 
+    // Initial setup
     initTabs();
+    addNameFromStorage(); // Display the player's name from sessionStorage if available
 });
