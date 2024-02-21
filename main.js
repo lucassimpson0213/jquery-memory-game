@@ -3,6 +3,17 @@ $(document).ready(function () {
         $('#tabs').tabs();
     }
 
+
+    function addName() {
+        let name = $('#player_name').val();
+        if(!name){
+            alert('please enter your name!')
+        }
+        else {
+            $('#player').text(name);
+        }
+    }
+
     function adjustRowsVisibility(requiredRows) {
         for (let i = 1; i <= 6; i++) {
             if (i <= requiredRows) {
@@ -36,6 +47,7 @@ $(document).ready(function () {
 
     $('#save_settings').click(function () {
         updateRowsVisibility();
+        addName();
     });
 
     initTabs();
