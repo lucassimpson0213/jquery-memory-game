@@ -1,18 +1,33 @@
 $(document).ready(function () {
+    function addNameFromStorage() {
+        var storedPlayerName = sessionStorage.get('playerName');
+        if(storedPlayerName){
+            $('#player').text(`Player Name: ${storedPlayerName}`);
+        }
+        
+    }
+
+    addNameFromStorage();
     function initTabs() {
         $('#tabs').tabs();
     }
 
 
     function addName() {
-        let name = $('#player_name').val();
-        if(!name){
+
+        let playerName = $('#player_name').val();
+
+        if (!playerName) {
             alert('please enter your name!')
         }
         else {
-            $('#player').text(name);
+            $('#player').text(`Player Name: ${playerName}`);
+            sessionStorage.setItem('playerName', playerName);
         }
     }
+
+
+    
 
     function adjustRowsVisibility(requiredRows) {
         for (let i = 1; i <= 6; i++) {
