@@ -87,23 +87,18 @@ $(document).ready(function () {
         }
     }
 
-    function checkForMatch() {
-        if (flippedCards[0].attr('id') === flippedCards[1].attr('id')) {
-            // Matching cards: hide them using a sliding motion
-            flippedCards.forEach($card => {
-                $card.find('img').delay(1000).slideUp(500, function () {
-                    $card.addClass('matched'); // Mark as matched
-                });
-            });
+    function matchCards() {
+        const [firstCard, secondCard] = flippedCards;
+
+        if (firstCard.attr('id') === secondCard.attr('id')) {
+            firstCard.add(secondCard).addClass('matched');
         } else {
-            // Not matching: fade them out, then flip back to the back image after a delay
-            flippedCards.forEach($card => {
-                $card.find('img').delay(2000).fadeOut(500, function () {
-                    $(this).attr('src', './images/back.png').fadeIn(500);
-                });
-            });
+            setTimeout(() => {
+                firstCard.add(secondCard).find('img').attr('src', './images/back.png').removeClass('flipped');
+            }, 500); 
         }
-        flippedCards = []; // Reset flipped cards array for the next turn
+
+        flippedCards = [];
     }
    
 
