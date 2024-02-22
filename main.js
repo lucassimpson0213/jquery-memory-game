@@ -88,18 +88,32 @@ $(document).ready(function () {
     }
 
     function matchCards() {
-        const [firstCard, secondCard] = flippedCards;
-
-        if (firstCard.attr('id') === secondCard.attr('id')) {
-            firstCard.add(secondCard).addClass('matched');
-        } else {
-            setTimeout(() => {
-                firstCard.add(secondCard).find('img').attr('src', './images/back.png').removeClass('flipped');
-            }, 500); 
+        if (flippedCards.length < 2) {
+            return; // Ensure we have exactly two cards flipped before proceeding.
         }
 
-        flippedCards = [];
+        const [firstCard, secondCard] = flippedCards;
+
+        // Check if the cards match
+        if (firstCard.attr('id') === secondCard.attr('id')) {
+            // If the cards match, wait 1 second, then hide them with a sliding motion
+            setTimeout(() => {
+                firstCard.add(secondCard).find('img').slideUp(500, function () {
+                    $(this).parent().addClass('matched'); // Optionally, hide or visually indicate matched cards
+                });
+            }, 1000);
+        } else {
+            // If the cards do not match, wait 2 seconds, fade them out, flip back to the back image, then fade back in
+            setTimeout(() => {
+                firstCard.add(secondCard).find('img').fadeOut(500, function () {
+                    $(this).attr('src', './images/back.png').fadeIn(500);
+                }).removeClass('flipped');
+            }, 2000);
+        }
+
+        flippedCards = []; // Reset flipped cards array for the next turn
     }
+
    
 
    
