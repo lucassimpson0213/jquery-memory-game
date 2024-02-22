@@ -100,7 +100,7 @@ $(document).ready(function () {
 
         let cards = cardsMap.get(amountCards);
 
-        
+
 
 
     }
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
         let requiredRows = rowsMap.get(val);
 
-        adjustRowsVisibility(requiredRows);
+        adjustRows(requiredRows);
 
     }
 
