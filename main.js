@@ -64,13 +64,7 @@ $(document).ready(function () {
     }
 
     function handleCardClick() {
-        /*
-            $('#cards').on('click', 'a', function(event) {
-    event.preventDefault(); // Prevent the default anchor action
-    // Your logic here
-    console.log('Card clicked:', this.id); // Example action
-});
-        */
+        
     }
 
     function shuffle(array) {
@@ -118,6 +112,12 @@ $(document).ready(function () {
         prepareCards();
         addToSessionStorage();
         updateRows();
+    });
+
+    $('#cards').on('click', 'a', function () {
+        event.preventDefault(); // Prevent the default anchor action
+        // Your logic here
+        console.log('Card clicked:', this.id); // Example action
     });
 
     preloadImages();
