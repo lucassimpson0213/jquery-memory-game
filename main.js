@@ -109,6 +109,7 @@ $(document).ready(function () {
     $('#save_settings').click(function () {
         prepareCards();
         addToSessionStorage();
+        updateRows();
     });
 
     preloadImages();
