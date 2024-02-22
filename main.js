@@ -72,18 +72,14 @@ $(document).ready(function () {
         }
 
 
-        revealCard($clickedCard);
-        
-
-
-    }
-
-    function revealCard ($clickedCard) {
         const imageSrc = $clickedCard.attr('id');
-        $clickedCard.find('img').attr('src',imageSrc);
-
+        $clickedCard.find('img').attr('src', imageSrc);
         
+
+
     }
+
+   
 
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
