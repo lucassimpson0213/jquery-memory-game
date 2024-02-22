@@ -63,21 +63,49 @@ $(document).ready(function () {
 
     }
 
+    let flippedCards = [];
+
     function handleCardClick(event) {
         event.preventDefault();
         const $clickedCard = $(this);
+        const isMatched = $clickedCard.hasClass('matched');
+        const isAnimated = $clickedCard.is(':animated');
+        const hasTwoFlipped = flippedCards.length === 2;
 
-        if ($clickedCard.hasClass('matched') || $clickedCard.is(':animated')) {
+        // Conditions under which a card click should be ignored
+        if (isMatched || isAnimated || hasTwoFlipped) {
             return;
         }
 
-
+        // Proceed to flip the card
         const imageSrc = $clickedCard.attr('id');
-        $clickedCard.find('img').attr('src', imageSrc);
-        
+        $clickedCard.find('img').attr('src', imageSrc).addClass('flipped');
+        flippedCards.push($clickedCard);
 
-
+        // If two cards are flipped, proceed to check for a match
+        if (flippedCards.length === 2) {
+            setTimeout(matchCards, 1000); // Add a delay before checking for a match
+        }
     }
+
+    function matchCards() {
+        const [firstCard, secondCard] = flippedCards;
+
+        // Check if the flipped cards match
+        if (firstCard.attr('id') === secondCard.attr('id')) {
+            // Cards match: mark them as matched
+            firstCard.add(secondCard).addClass('matched');
+        } else {
+            // Cards do not match: flip them back after a short delay
+            setTimeout(() => {
+                firstCard.add(secondCard).find('img').attr('src', './images/back.png').removeClass('flipped');
+            }, 500); // Adjust timing as needed
+        }
+
+        // Reset the flippedCards array for the next turn
+        flippedCards = [];
+    }
+   
 
    
 
