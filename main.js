@@ -60,181 +60,100 @@ $(document).ready(function () {
 
 
     // Initializes jQuery UI tabs
-    function initUITabs () 
-    {
-
-            $('#tabs').tabs();
-
+    function initUITabs() {
+        $('#tabs').tabs();
     }
-    
 
     const preloadedImages = [];
 
-
-    function preloadImages () 
-    {
-
-        uniqueImages.forEach(function  (src)  {
-
+    function preloadImages() {
+        uniqueImages.forEach(function(src) {
             const img = new Image();
             img.src = src;
             preloadedImages.push(img);
-
-
-        })
-    }
-
-    let cards = [];
-
-    function prepareCards (amountCards) 
-    {
-         let cardsMap = new Map ([
-                [8, 4],
-                [16, 8],
-                [24, 12],
-                [32, 16],
-                [40, 20],
-                [48, 24]
-        ]);
-
-
-        let cards = cardsMap.get(amountCards);
-
-
-
-
-    }
-
-
-
-    /*
-        shuffle function:
-        function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
-}
-
-
-    */
-
-
-    // Retrieves and displays the player's name from sessionStorage
-    function GetFromSessionStorage () 
-    {
-        var storedPlayerName = sessionStorage.getItem('playerName');
-
-            if (storedPlayerName)   
-            {
-
-                    $('#player').text(`Player Name: ${storedPlayerName}`);
-             
-            }
-    }
-
-
-
-
-
-    // Adds the player's name to sessionStorage and updates the display
-    function addToSessionStorage () 
-    {
-
-        let playerName = $('#player_name').val();
-
-        if (!playerName) 
-        {
-
-                alert('Please enter your name!');
-
-        } 
-        else 
-        {
-
-                $('#player').text(`Player Name: ${playerName}`);
-
-                sessionStorage.setItem('playerName', playerName);
-
-        }
-    }
-
-
-
-
-    // Adjusts the visibility of rows based on the number of cards selected
-    function adjustRows (requiredRows)
-    {
-        for (let i = 1; i <= 6; i++) {
-            if (i <= requiredRows)
-            {
-
-                 $('#row' + i).show();
-
-            } 
-            else 
-            {
-
-                $('#row' + i).hide();
-
-            }
-        }
-    }
-
-
-
-
-    // Updates the visibility of rows based on the selected number of cards
-    function updateRows () 
-    {
-
-        let rowsMap = new Map ([
-                [8, 1],
-                [16, 2],
-                [24, 3],
-                [32, 4],
-                [40, 5],
-                [48, 6]
-        ]);
-
-        let rows = parseInt($('#num_cards').val(), 10);
-
-        prepareCards(rows);
-
-        let requiredRows = rowsMap.get(val);
-
-        adjustRows(requiredRows);
-
-    }
-
-
-
-
-
-    // Logs information about each anchor tag
-    function logAnchorTags() {
-
-        $('a').each(function (index, element) {
-
-            console.log(`Jquery Element ${index}:`, element);
-
         });
     }
 
-    // Event listener for the Save Settings button
-    $('#save_settings').click(function () {
+    let cards = []; // Use this array to track cards for the game
 
-            updateRows();
-            
+    function prepareCards(amountCards) {
+        let cardsMap = new Map([
+            [8, 4],
+            [16, 8],
+            [24, 12],
+            [32, 16],
+            [40, 20],
+            [48, 24]
+        ]);
 
-            addToSessionStorage();
+        let numberOfUniqueCardsNeeded = cardsMap.get(amountCards);
+        cards = uniqueImages.slice(0, numberOfUniqueCardsNeeded).flatMap(src => [src, src]);
+        shuffle(cards);
+    }
+
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+    }
+
+    function GetFromSessionStorage() {
+        var storedPlayerName = sessionStorage.getItem('playerName');
+        if (storedPlayerName) {
+            $('#player').text(`Player Name: ${storedPlayerName}`);
+        }
+    }
+
+    function addToSessionStorage() {
+        let playerName = $('#player_name').val();
+        if (!playerName) {
+            alert('Please enter your name!');
+        } else {
+            $('#player').text(`Player Name: ${playerName}`);
+            sessionStorage.setItem('playerName', playerName);
+        }
+    }
+
+    function adjustRows(requiredRows) {
+        for (let i = 1; i <= 6; i++) {
+            if (i <= requiredRows) {
+                $('#row' + i).show();
+            } else {
+                $('#row' + i).hide();
+            }
+        }
+    }
+
+    function updateRows() {
+        let rowsMap = new Map([
+            [8, 1],
+            [16, 2],
+            [24, 3],
+            [32, 4],
+            [40, 5],
+            [48, 6]
+        ]);
+
+        let selectedNumberOfCards = parseInt($('#num_cards').val(), 10);
+        prepareCards(selectedNumberOfCards); // This needs to adjust based on the actual value
+        let requiredRows = rowsMap.get(selectedNumberOfCards); // Fixed the undefined variable by using the selected number of cards
+        adjustRows(requiredRows);
+    }
+
+    function logAnchorTags() {
+        $('a').each(function(index, element) {
+            console.log(`Jquery Element ${index}:`, element);
+        });
+    }
+
+    $('#save_settings').click(function() {
+        updateRows();
+        addToSessionStorage();
     });
 
     // Initial setup
     preloadImages();
-
     initUITabs();
-
     GetFromSessionStorage();
-    
-    prepareCards(48);
+    prepareCards(48); // Preparing for the default case of 48 cards
     
     // Display the player's name from sessionStorage if available
 });
