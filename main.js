@@ -56,7 +56,7 @@ $(document).ready(function () {
                     <img src="./images/back.png" alt="">
                 </a> `
 
-            card.appendTo('#cards');
+            $(card).appendTo('#cards');
         })
 
 
