@@ -53,7 +53,7 @@ $(document).ready(function () {
         gameCards.forEach((src, index) => {
            let card = `
                 <a id="${src}" href="#">
-                    <img src="./images/back.png" alt="">
+                    <img class="card-back" src="./images/back.png" alt="">
                 </a> `
 
             $(card).appendTo('#cards');
@@ -61,8 +61,16 @@ $(document).ready(function () {
 
 
 
+    }
 
-
+    function handleCardClick() {
+        /*
+            $('#cards').on('click', 'a', function(event) {
+    event.preventDefault(); // Prevent the default anchor action
+    // Your logic here
+    console.log('Card clicked:', this.id); // Example action
+});
+        */
     }
 
     function shuffle(array) {
