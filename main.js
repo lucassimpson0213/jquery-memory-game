@@ -72,17 +72,16 @@ $(document).ready(function () {
         const isAnimated = $clickedCard.is(':animated');
         const hasTwoFlipped = flippedCards.length === 2;
 
-        // Conditions under which a card click should be ignored
         if (isMatched || isAnimated || hasTwoFlipped) {
             return;
         }
 
-        // Proceed to flip the card
         const imageSrc = $clickedCard.attr('id');
-        $clickedCard.find('img').attr('src', imageSrc).addClass('flipped');
+        $clickedCard.find('img').fadeOut(500, function () {
+            $(this).attr('src', imageSrc).fadeIn(500);
+        });
         flippedCards.push($clickedCard);
 
-        // If two cards are flipped, proceed to check for a match
         if (flippedCards.length === 2) {
             setTimeout(matchCards, 1000); // Add a delay before checking for a match
         }
@@ -91,18 +90,14 @@ $(document).ready(function () {
     function matchCards() {
         const [firstCard, secondCard] = flippedCards;
 
-        // Check if the flipped cards match
         if (firstCard.attr('id') === secondCard.attr('id')) {
-            // Cards match: mark them as matched
             firstCard.add(secondCard).addClass('matched');
         } else {
-            // Cards do not match: flip them back after a short delay
             setTimeout(() => {
                 firstCard.add(secondCard).find('img').attr('src', './images/back.png').removeClass('flipped');
-            }, 500); // Adjust timing as needed
+            }, 500); 
         }
 
-        // Reset the flippedCards array for the next turn
         flippedCards = [];
     }
    
