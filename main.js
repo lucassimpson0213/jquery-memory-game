@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     let cards = [];
 
-    function prepareCards() 
+    function prepareCards (amountCards) 
     {
          let cardsMap = new Map ([
                 [8, 4],
@@ -97,17 +97,11 @@ $(document).ready(function () {
                 [48, 24]
         ]);
 
-        
-        cardsMap.get()
 
-
-
-
-
-
-
+        let cards = cardsMap.get(amountCards);
 
         
+
 
     }
 
@@ -200,9 +194,11 @@ $(document).ready(function () {
                 [48, 6]
         ]);
 
-        var val = parseInt($('#num_cards').val(), 10);
+        let rows = parseInt($('#num_cards').val(), 10);
 
-        var requiredRows = rowsMap.get(val);
+        prepareCards(rows);
+
+        let requiredRows = rowsMap.get(val);
 
         adjustRowsVisibility(requiredRows);
 
@@ -226,6 +222,7 @@ $(document).ready(function () {
     $('#save_settings').click(function () {
 
             updateRows();
+            
 
             addToSessionStorage();
     });
@@ -237,7 +234,7 @@ $(document).ready(function () {
 
     GetFromSessionStorage();
     
-    prepareCards();
+    prepareCards(48);
     
     // Display the player's name from sessionStorage if available
 });
