@@ -26,6 +26,8 @@ $(document).ready(function () {
         "/images/card_24.png"
     ];
 
+    let selectedImages = [];
+
     function initUITabs() {
         $('#tabs').tabs();
     }
@@ -35,6 +37,21 @@ $(document).ready(function () {
             const img = new Image();
             img.src = src;
         });
+    }
+
+
+    function prepareCards(numCards) {
+        selectedImages = uniqueImages.slice(0, numCards / 2);
+        let gameCards = selectedImages.concat(selectedImages);
+        shuffle(gameCards);
+
+
+
+
+    }
+
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
     }
 
     function GetFromSessionStorage() {
