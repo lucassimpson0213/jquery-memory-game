@@ -63,7 +63,25 @@ $(document).ready(function () {
 
     }
 
-    function handleCardClick() {
+    function handleCardClick(event) {
+        event.preventDefault();
+        const $clickedCard = $(this);
+
+        if ($clickedCard.hasClass('matched') || $clickedCard.is(':animated')) {
+            return;
+        }
+
+
+        revealCard($clickedCard);
+        checkForMatch($clickedCard);
+
+
+    }
+
+    function revealCard ($clickedCard) {
+        const imageSrc = $clickedCard.attr('id');
+        $clickedCard.find('img').attr('src',imageSrc);
+
         
     }
 
@@ -114,11 +132,8 @@ $(document).ready(function () {
         updateRows();
     });
 
-    $('#cards').on('click', 'a', function () {
-        event.preventDefault(); // Prevent the default anchor action
-        // Your logic here
-        console.log('Card clicked:', this.id); // Example action
-    });
+    $('#cards').on('click', 'a', handleCardClick);
+    
 
     preloadImages();
     initUITabs();
