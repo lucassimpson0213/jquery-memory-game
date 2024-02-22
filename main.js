@@ -1,58 +1,57 @@
 $(document).ready(function () {
-    const preloadedImages = []
+
 
     const uniqueImages = [
 
-        "/images/card_1.png",
+                "/images/card_1.png",
 
-        "/images/card_2.png",
+                "/images/card_2.png",
 
-        "/images/card_3.png",
+                "/images/card_3.png",
 
-        "/images/card_4.png",
+                "/images/card_4.png",
 
-        "/images/card_5.png",
+                "/images/card_5.png",
 
-        "/images/card_6.png",
+                "/images/card_6.png",
 
-        "/images/card_7.png",
+                "/images/card_7.png",
 
-        "/images/card_8.png",
+                "/images/card_8.png",
 
-        "/images/card_9.png",
+                "/images/card_9.png",
 
-        "/images/card_10.png",
+                "/images/card_10.png",
 
-        "/images/card_11.png",
+                "/images/card_11.png",
 
-        "/images/card_12.png",
+                "/images/card_12.png",
 
-        "/images/card_13.png",
+                "/images/card_13.png",
 
-        "/images/card_14.png",
+                "/images/card_14.png",
 
-        "/images/card_15.png",
+                "/images/card_15.png",
 
-        "/images/card_16.png",
+                "/images/card_16.png",
 
-        "/images/card_17.png",
+                "/images/card_17.png",
 
-        "/images/card_18.png",
+                "/images/card_18.png",
 
-        "/images/card_19.png",
+                "/images/card_19.png",
 
-        "/images/card_20.png",
+                "/images/card_20.png",
 
-        "/images/card_21.png",
+                "/images/card_21.png",
 
-        "/images/card_22.png",
+                "/images/card_22.png",
 
-        "/images/card_23.png",
+                "/images/card_23.png",
 
-        "/images/card_24.png",
+                "/images/card_24.png"
 
-        "/images/card_25.png"
-        
+            
 
     ]
 
@@ -61,13 +60,54 @@ $(document).ready(function () {
 
 
     // Initializes jQuery UI tabs
-    function initUITabs() {
+    function initUITabs () 
+    {
 
-        $('#tabs').tabs();
+            $('#tabs').tabs();
 
     }
+    
 
-    function prepareImages() {
+    const preloadedImages = [];
+
+
+    function preloadImages () 
+    {
+
+        uniqueImages.forEach(function  (src)  {
+
+            const img = new Image();
+            img.src = src;
+            preloadedImages.push(img);
+
+
+        })
+    }
+
+    let cards = [];
+
+    function prepareCards() 
+    {
+         let cardsMap = new Map ([
+                [8, 4],
+                [16, 8],
+                [24, 12],
+                [32, 16],
+                [40, 20],
+                [48, 24]
+        ]);
+
+        
+        cardsMap.get()
+
+
+
+
+
+
+
+
+        
 
     }
 
@@ -84,13 +124,16 @@ $(document).ready(function () {
 
 
     // Retrieves and displays the player's name from sessionStorage
-    function GetNameFromSessionStorage() {
+    function GetFromSessionStorage () 
+    {
         var storedPlayerName = sessionStorage.getItem('playerName');
 
-        if (storedPlayerName)   {
+            if (storedPlayerName)   
+            {
 
-            $('#player').text(`Player Name: ${storedPlayerName}`);
-        }
+                    $('#player').text(`Player Name: ${storedPlayerName}`);
+             
+            }
     }
 
 
@@ -98,18 +141,23 @@ $(document).ready(function () {
 
 
     // Adds the player's name to sessionStorage and updates the display
-    function addNameToSessionStorage() {
+    function addToSessionStorage () 
+    {
+
         let playerName = $('#player_name').val();
 
-        if (!playerName) {
+        if (!playerName) 
+        {
 
-            alert('Please enter your name!');
+                alert('Please enter your name!');
 
-        } else {
+        } 
+        else 
+        {
 
-            $('#player').text(`Player Name: ${playerName}`);
+                $('#player').text(`Player Name: ${playerName}`);
 
-            sessionStorage.setItem('playerName', playerName);
+                sessionStorage.setItem('playerName', playerName);
 
         }
     }
@@ -118,13 +166,17 @@ $(document).ready(function () {
 
 
     // Adjusts the visibility of rows based on the number of cards selected
-    function adjustRowsVisibility(requiredRows) {
+    function adjustRows (requiredRows)
+    {
         for (let i = 1; i <= 6; i++) {
-            if (i <= requiredRows) {
+            if (i <= requiredRows)
+            {
 
-                $('#row' + i).show();
+                 $('#row' + i).show();
 
-            } else {
+            } 
+            else 
+            {
 
                 $('#row' + i).hide();
 
@@ -136,14 +188,16 @@ $(document).ready(function () {
 
 
     // Updates the visibility of rows based on the selected number of cards
-    function updateRowsVisibility() {
-        let rowsMap = new Map([
-            [8, 1],
-            [16, 2],
-            [24, 3],
-            [32, 4],
-            [40, 5],
-            [48, 6]
+    function updateRows () 
+    {
+
+        let rowsMap = new Map ([
+                [8, 1],
+                [16, 2],
+                [24, 3],
+                [32, 4],
+                [40, 5],
+                [48, 6]
         ]);
 
         var val = parseInt($('#num_cards').val(), 10);
@@ -160,6 +214,7 @@ $(document).ready(function () {
 
     // Logs information about each anchor tag
     function logAnchorTags() {
+
         $('a').each(function (index, element) {
 
             console.log(`Jquery Element ${index}:`, element);
@@ -170,13 +225,19 @@ $(document).ready(function () {
     // Event listener for the Save Settings button
     $('#save_settings').click(function () {
 
-        updateRowsVisibility();
+            updateRows();
 
-        addName();
+            addToSessionStorage();
     });
 
     // Initial setup
+    preloadImages();
+
     initUITabs();
 
-    GetNameFromSessionStorage(); // Display the player's name from sessionStorage if available
+    GetFromSessionStorage();
+    
+    prepareCards();
+    
+    // Display the player's name from sessionStorage if available
 });
