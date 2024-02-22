@@ -40,10 +40,25 @@ $(document).ready(function () {
     }
 
 
-    function prepareCards(numCards) {
+    function prepareCards() {
+        let numCards = parseInt($('#num_cards').val(), 10);
         selectedImages = uniqueImages.slice(0, numCards / 2);
         let gameCards = selectedImages.concat(selectedImages);
         shuffle(gameCards);
+
+
+        $('#cards').empty();
+
+
+        gameCards.forEach((src, index) => {
+           let card = `
+                <a id="${src}" href="#">
+                    <img src="./images/back.png" alt="">
+                </a> `
+
+            card.appendTo('#cards');
+        })
+
 
 
 
@@ -92,12 +107,12 @@ $(document).ready(function () {
     }
 
     $('#save_settings').click(function () {
-        updateRows();
+        prepareCards();
         addToSessionStorage();
     });
 
     preloadImages();
     initUITabs();
     GetFromSessionStorage();
-    updateRows(); // Call updateRows to adjust the UI based on the default or previously saved settings
+    prepareCards();// Call updateRows to adjust the UI based on the default or previously saved settings
 });
