@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 
         revealCard($clickedCard);
-        checkForMatch($clickedCard);
+        
 
 
     }
