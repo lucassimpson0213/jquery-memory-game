@@ -57,7 +57,7 @@ $(document).ready(function () {
         let highScore = localStorage.getItem('highScore') ? parseFloat(localStorage.getItem('highScore')): 0;
 
         if (currentScore > highScore) {
-            localStorage.setItem('highScore', currentScore.toString());
+            localStorage.setItem('highScore', (currentScore.toFixed(2)).toString());
             console.log("New high score:", currentScore * 100);
             $('#correct').text(`correct: ${currentScore * 100}%`)
             amtClicks = 0;
