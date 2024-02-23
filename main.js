@@ -78,6 +78,8 @@ $(document).ready(function () {
         if (currentScore > highScore) {
             localStorage.setItem('highScore', currentScore.toString());
             console.log("New high score:", currentScore);
+            amtClicks = 0;
+            correctClicks = 0;
         }
     }
 
