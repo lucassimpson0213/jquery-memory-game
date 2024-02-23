@@ -212,6 +212,7 @@ $(document).ready(function () {
     preloadImages();
     initUITabs();
     GetFromSessionStorage();
+    displayHighScore();
     prepareCards(); // Call updateRows to adjust the UI based on the default or previously saved settings
 });
 
