@@ -49,7 +49,7 @@ $(document).ready(function () {
     // Display high score if available
     function displayHighScore() {
         let highScore = localStorage.getItem('highScore');
-        let floatHighScore = parseFloat(highScore, 10)
+        let floatHighScore = parseFloat(highScore, 4)
         let floatHighScore2 = floatHighScore * 100;
         let formattedHighScore = `${floatHighScore2}%`;
         if (highScore) {
@@ -129,7 +129,7 @@ $(document).ready(function () {
                 firstCard.add(secondCard).find('img').fadeOut(500, function () {
                     $(this).attr('src', './images/back.png').fadeIn(500);
                 });
-            }, 2000);
+            }, 1000);
         }
 
         flippedCards = [];
@@ -180,7 +180,7 @@ $(document).ready(function () {
 
     // Update rows based on selected number of cards
     function updateRows() {
-        let selectedNumberOfCards = parseInt($('#num_cards').val(), 10);
+        let selectedNumberOfCards = parseInt($('#num_cards').val(), 4);
         let rowsMap = new Map([
             [8, 1], [16, 2], [24, 3], [32, 4], [40, 5], [48, 6]
         ]);
