@@ -41,8 +41,9 @@ $(document).ready(function () {
 
 
     function prepareCards() {
-        let numCards = parseInt($('#num_cards').val(), 10);
+        var numCards = parseInt($('#num_cards').val(), 10);
         selectedImages = uniqueImages.slice(0, numCards / 2);
+        
         let gameCards = selectedImages.concat(selectedImages);
         shuffle(gameCards);
 
@@ -71,23 +72,25 @@ $(document).ready(function () {
             return;
         }
 
-        // Retrieve the high score from localStorage.
+        
         let highScore = localStorage.getItem('highScore');
 
-        // Update the HTML element designated to show the high score.
-        // Assuming you have an element with the ID 'high_score' for this purpose.
+        
         $('#high_score').text(`High Score: ${highScore}`);
     }
 
 
     function storeHighScore(highScore) {
         localStorage.setItem('highScore', highScore.toString());
-        
+
     }
 
     let flippedCards = [];
     let amtClicks = 0;
     let correctClicks = 0;
+    let totalPairs = numCards / 2;
+    let matchedPairs = 0;
+    const allPairsFlipped = matchedPairs === totalPairs;
 
     function handleCardClick(event) {
         event.preventDefault();
@@ -95,8 +98,14 @@ $(document).ready(function () {
         const isMatched = $clickedCard.hasClass('matched');
         const isAnimated = $clickedCard.is(':animated');
         const hasTwoFlipped = flippedCards.length === 2;
+        
 
-        if (isMatched || isAnimated || hasTwoFlipped) {
+        if(allPairsFlipped){
+            let highScore = correctClicks / amtClicks;
+            storeHighScore(highScore);
+            displayHighScore();
+        }
+        if (isMatched || isAnimated || hasTwoFlipped ) {
             return;
         }
 
@@ -199,5 +208,6 @@ $(document).ready(function () {
     preloadImages();
     initUITabs();
     GetFromSessionStorage();
-    prepareCards();// Call updateRows to adjust the UI based on the default or previously saved settings
+    prepareCards();
+        // Call updateRows to adjust the UI based on the default or previously saved settings
 });
