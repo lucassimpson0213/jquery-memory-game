@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    // Array containing paths to unique images
     const uniqueImages = [
         "./images/card_1.png",
         "./images/card_2.png",
@@ -28,10 +30,12 @@ $(document).ready(function () {
 
     let selectedImages = [];
 
+    // Initialize UI tabs
     function initUITabs() {
         $('#tabs').tabs();
     }
 
+    // Preload images for smoother gameplay
     function preloadImages() {
         uniqueImages.forEach(src => {
             const img = new Image();
@@ -39,31 +43,26 @@ $(document).ready(function () {
         });
     }
 
-
+    // Prepare cards for the game
     function prepareCards() {
         let numCards = parseInt($('#num_cards').val(), 10);
         selectedImages = uniqueImages.slice(0, numCards / 2);
         let gameCards = selectedImages.concat(selectedImages);
         shuffle(gameCards);
 
-
         $('#cards').empty();
 
-
         gameCards.forEach((src, index) => {
-           let card = `
+            let card = `
                 <a id="${src}" href="#">
                     <img class="card-back" src="./images/back.png" alt="">
                 </a> `
 
             $(card).appendTo('#cards');
-        })
-
-
-
-
+        });
     }
 
+    // Display high score if available
     function displayHighScore() {
         let highScore = localStorage.getItem('highScore');
         if (highScore) {
@@ -71,8 +70,7 @@ $(document).ready(function () {
         }
     }
 
-
-
+    // Calculate final score and update high score if necessary
     function calculateFinalScore() {
         let currentScore = correctClicks / amtClicks; // Example score calculation
         let highScore = localStorage.getItem('highScore') ? parseFloat(localStorage.getItem('highScore')) : 0;
@@ -83,11 +81,12 @@ $(document).ready(function () {
         }
     }
 
-
+    // Array to store flipped cards and tracking clicks
     let flippedCards = [];
     let amtClicks = 0;
     let correctClicks = 0;
 
+    // Handle card click event
     function handleCardClick(event) {
         event.preventDefault();
         const $clickedCard = $(this);
@@ -110,76 +109,55 @@ $(document).ready(function () {
         }
     }
 
+    // Match two flipped cards
     function matchCards() {
-        // Ensure there are exactly two cards flipped before proceeding.
         if (flippedCards.length < 2) return;
 
-        // Increment the number of attempts each time two cards are flipped.
         amtClicks++;
 
         const [firstCard, secondCard] = flippedCards;
 
-        // Extract 'id' for comparison, assuming 'id' stores the path for the image.
         const firstCardID = firstCard.attr('id');
         const secondCardID = secondCard.attr('id');
 
         if (firstCardID === secondCardID) {
-            // Correct guess, increment the count of correct matches.
             correctClicks++;
 
-            // Apply matched class and visual indication for matched cards.
             setTimeout(() => {
                 firstCard.add(secondCard).addClass('matched').each(function () {
-                    // Optionally, hide them with fadeOut or another effect if needed.
-                    // If removing from view, adjust game end check to account for fewer total cards.
-                    $(this).fadeOut(500);
+                    $(this).slideUp(500);
                 });
-                // Check if the game has ended after this match.
                 checkGameEnd();
-            }, 500); // Adjusted to give immediate feedback after a match is found.
+            }, 500);
         } else {
-            // No match, flip them back over with a visual effect.
             setTimeout(() => {
                 firstCard.add(secondCard).find('img').fadeOut(500, function () {
-                    // Reset to the back image.
                     $(this).attr('src', './images/back.png').fadeIn(500);
                 });
-            }, 2000); // Provides a moment for players to memorize the cards.
+            }, 2000);
         }
 
-        // Clear the flippedCards array for the next turn.
         flippedCards = [];
     }
 
+    // Check if the game has ended
     function checkGameEnd() {
-        // Count the total number of <a> elements within the #cards container.
         const totalCards = $('#cards a').length;
-
-        // Count the number of <a> elements with the 'matched' class.
         const matchedCards = $('#cards a.matched').length;
 
-        // The game ends when all cards are matched.
         if (matchedCards === totalCards) {
-            // Game completion logic
             calculateFinalScore();
             displayHighScore();
-
-            // Example: Display a "Game Over" message or prompt for a new game
             alert("Congratulations! You've completed the game.");
         }
     }
 
-
-
-
-   
-
-   
-
+    // Shuffle array
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
     }
 
+    // Retrieve player name from session storage
     function GetFromSessionStorage() {
         var storedPlayerName = sessionStorage.getItem('playerName');
         if (storedPlayerName) {
@@ -187,6 +165,7 @@ $(document).ready(function () {
         }
     }
 
+    // Add player name to session storage
     function addToSessionStorage() {
         let playerName = $('#player_name').val();
         if (!playerName) {
@@ -197,12 +176,14 @@ $(document).ready(function () {
         }
     }
 
+    // Adjust number of rows based on selected number of cards
     function adjustRows(requiredRows) {
         for (let i = 1; i <= 6; i++) {
             $('#row' + i).toggle(i <= requiredRows);
         }
     }
 
+    // Update rows based on selected number of cards
     function updateRows() {
         let selectedNumberOfCards = parseInt($('#num_cards').val(), 10);
         let rowsMap = new Map([
@@ -217,17 +198,20 @@ $(document).ready(function () {
         adjustRows(requiredRows);
     }
 
+    // Event handler for saving settings
     $('#save_settings').click(function () {
         prepareCards();
         addToSessionStorage();
         updateRows();
     });
 
+    // Event handler for card clicks
     $('#cards').on('click', 'a', handleCardClick);
-    
 
+    // Initial setup
     preloadImages();
     initUITabs();
     GetFromSessionStorage();
-    prepareCards();// Call updateRows to adjust the UI based on the default or previously saved settings
+    prepareCards(); // Call updateRows to adjust the UI based on the default or previously saved settings
 });
+
