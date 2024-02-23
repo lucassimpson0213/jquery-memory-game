@@ -61,9 +61,33 @@ $(document).ready(function () {
 
 
 
+
+    }
+
+
+    function displayHighScore() {
+        // If there have been no clicks or there is no high score, don't proceed.
+        if (amtClicks === 0 || !localStorage.getItem('highScore')) {
+            return;
+        }
+
+        // Retrieve the high score from localStorage.
+        let highScore = localStorage.getItem('highScore');
+
+        // Update the HTML element designated to show the high score.
+        // Assuming you have an element with the ID 'high_score' for this purpose.
+        $('#high_score').text(`High Score: ${highScore}`);
+    }
+
+
+    function storeHighScore(highScore) {
+        localStorage.setItem('highScore', highScore.toString());
+        
     }
 
     let flippedCards = [];
+    let amtClicks = 0;
+    let correctClicks = 0;
 
     function handleCardClick(event) {
         event.preventDefault();
@@ -96,6 +120,8 @@ $(document).ready(function () {
 
         // Check if the cards match
         if (firstCard.attr('id') === secondCard.attr('id')) {
+            amtClicks++;
+            correctClicks++;
             // If the cards match, wait 1 second, then hide them with a sliding motion
             setTimeout(() => {
                 firstCard.add(secondCard).find('img').slideUp(500, function () {
@@ -103,6 +129,8 @@ $(document).ready(function () {
                 });
             }, 1000);
         } else {
+            amtClicks++;
+            
             // If the cards do not match, wait 2 seconds, fade them out, flip back to the back image, then fade back in
             setTimeout(() => {
                 firstCard.add(secondCard).find('img').fadeOut(500, function () {
