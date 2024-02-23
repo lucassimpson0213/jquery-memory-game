@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    // Array containing paths to unique images
     const uniqueImages = [
         "./images/card_1.png", "./images/card_2.png", "./images/card_3.png",
         "./images/card_4.png", "./images/card_5.png", "./images/card_6.png",
@@ -14,12 +13,10 @@ $(document).ready(function () {
 
     let selectedImages = [];
 
-    // Initialize UI tabs
     function initUITabs() {
         $('#tabs').tabs();
     }
 
-    // Preload images for smoother gameplay
     function preloadImages() {
         uniqueImages.forEach(src => {
             const img = new Image();
@@ -27,7 +24,6 @@ $(document).ready(function () {
         });
     }
 
-    // Prepare cards for the game
     function prepareCards() {
         let numCards = parseInt($('#num_cards').val(), 10);
         selectedImages = uniqueImages.slice(0, numCards / 2);
@@ -46,7 +42,6 @@ $(document).ready(function () {
         });
     }
 
-    // Display high score if available
     function displayHighScore() {
         let highScore = localStorage.getItem('highScore');
         let floatHighScore = parseFloat(highScore, 4)
@@ -57,7 +52,6 @@ $(document).ready(function () {
         }
     }
 
-    // Calculate final score and update high score if necessary
     function calculateFinalScore() {
         let currentScore = correctClicks / amtClicks;
         let highScore = localStorage.getItem('highScore') ? parseFloat(localStorage.getItem('highScore')): 0;
@@ -66,7 +60,6 @@ $(document).ready(function () {
             localStorage.setItem('highScore', currentScore.toString());
             console.log("New high score:", currentScore * 100);
             $('#correct').text(`correct: ${currentScore * 100}%`)
-            // Reset clicks for a new game session
             amtClicks = 0;
             correctClicks = 0;
         }
@@ -76,12 +69,10 @@ $(document).ready(function () {
     }
 
 
-    // Array to store flipped cards and tracking clicks
     let flippedCards = [];
     let amtClicks = 0;
     let correctClicks = 0;
 
-    // Handle card click event
     function handleCardClick(event) {
         event.preventDefault();
         const $clickedCard = $(this);
@@ -100,11 +91,10 @@ $(document).ready(function () {
         flippedCards.push($clickedCard);
 
         if (flippedCards.length === 2) {
-            setTimeout(matchCards, 1000); // Add a delay before checking for a match
+            setTimeout(matchCards, 1000); 
         }
     }
 
-    // Match two flipped cards
     function matchCards() {
         if (flippedCards.length < 2) return;
 
@@ -135,7 +125,6 @@ $(document).ready(function () {
         flippedCards = [];
     }
 
-    // Check if the game has ended
     function checkGameEnd() {
         const totalCards = $('#cards a').length;
         const matchedCards = $('#cards a.matched').length;
@@ -147,12 +136,10 @@ $(document).ready(function () {
         }
     }
 
-    // Shuffle array
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
     }
 
-    // Retrieve player name from session storage
     function GetFromSessionStorage() {
         var storedPlayerName = sessionStorage.getItem('playerName');
         if (storedPlayerName) {
@@ -160,7 +147,6 @@ $(document).ready(function () {
         }
     }
 
-    // Add player name to session storage
     function addToSessionStorage() {
         let playerName = $('#player_name').val();
         if (!playerName) {
@@ -171,14 +157,12 @@ $(document).ready(function () {
         }
     }
 
-    // Adjust number of rows based on selected number of cards
     function adjustRows(requiredRows) {
         for (let i = 1; i <= 6; i++) {
             $('#row' + i).toggle(i <= requiredRows);
         }
     }
 
-    // Update rows based on selected number of cards
     function updateRows() {
         let selectedNumberOfCards = parseInt($('#num_cards').val(), 4);
         let rowsMap = new Map([
@@ -188,17 +172,14 @@ $(document).ready(function () {
         adjustRows(requiredRows);
     }
 
-    // Event handler for saving settings
     $('#save_settings').click(function () {
         prepareCards();
         addToSessionStorage();
         updateRows();
     });
 
-    // Event handler for card clicks
     $('#cards').on('click', 'a', handleCardClick);
 
-    // Initial setup
     preloadImages();
     initUITabs();
     GetFromSessionStorage();
