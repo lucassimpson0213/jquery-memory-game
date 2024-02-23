@@ -49,15 +49,18 @@ $(document).ready(function () {
     // Display high score if available
     function displayHighScore() {
         let highScore = localStorage.getItem('highScore');
+        let floatHighScore = parseFloat(highScore, 10)
+        let floatHighScore2 = floatHighScore * 100;
+        let formattedHighScore = `%${floatHighScore2}`;
         if (highScore) {
-            $('#high_score').text(`High Score: ${highScore}`);
+            $('#high_score').text(`High Score: ${floatHighScore2}`);
         }
     }
 
     // Calculate final score and update high score if necessary
     function calculateFinalScore() {
         let currentScore = correctClicks / amtClicks;
-        let highScore = localStorage.getItem('highScore') ? (parseFloat(localStorage.getItem('highScore')) * 100) : 0;
+        let highScore = localStorage.getItem('highScore') ? parseFloat(localStorage.getItem('highScore')): 0;
 
         if (currentScore > highScore) {
             localStorage.setItem('highScore', currentScore.toString());
