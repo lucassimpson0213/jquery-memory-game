@@ -152,18 +152,23 @@ $(document).ready(function () {
     }
 
     function checkGameEnd() {
-        // Assuming each card has a class 'card', and matched cards get an additional class 'matched'
-        const totalCards = $('.card').length;
-        const matchedCards = $('.matched').length;
+        // Count the total number of <a> elements within the #cards container.
+        const totalCards = $('#cards a').length;
+
+        // Count the number of <a> elements with the 'matched' class.
+        const matchedCards = $('#cards a.matched').length;
 
         // The game ends when all cards are matched.
         if (matchedCards === totalCards) {
-            // Game completion logic, such as displaying a message, calculating scores, etc.
+            // Game completion logic
             calculateFinalScore();
             displayHighScore();
-            // Optionally, prompt for a new game or display a "Game Over" message.
+
+            // Example: Display a "Game Over" message or prompt for a new game
+            alert("Congratulations! You've completed the game.");
         }
     }
+
 
 
 
