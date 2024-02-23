@@ -129,7 +129,7 @@ $(document).ready(function () {
                 firstCard.add(secondCard).find('img').fadeOut(500, function () {
                     $(this).attr('src', './images/back.png').fadeIn(500);
                 });
-            }, 1000);
+            }, 500);
         }
 
         flippedCards = [];
