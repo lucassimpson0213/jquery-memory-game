@@ -46,7 +46,7 @@ $(document).ready(function () {
         let highScore = localStorage.getItem('highScore');
         let floatHighScore = parseFloat(highScore, 4)
         let floatHighScore2 = floatHighScore * 100;
-        let formattedHighScore = `${floatHighScore2}%`;
+        let formattedHighScore = `${floatHighScore2.toFixed(2)}%`;
         if (highScore) {
             $('#high_score').text(`high score: ${floatHighScore2}%`);
         }
