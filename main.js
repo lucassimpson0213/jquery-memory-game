@@ -100,11 +100,7 @@ $(document).ready(function () {
         const hasTwoFlipped = flippedCards.length === 2;
         
 
-        if(allPairsFlipped){
-            let highScore = correctClicks / amtClicks;
-            storeHighScore(highScore);
-            displayHighScore();
-        }
+        
         if (isMatched || isAnimated || hasTwoFlipped ) {
             return;
         }
