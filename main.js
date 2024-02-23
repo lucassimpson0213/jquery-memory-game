@@ -51,9 +51,9 @@ $(document).ready(function () {
         let highScore = localStorage.getItem('highScore');
         let floatHighScore = parseFloat(highScore, 10)
         let floatHighScore2 = floatHighScore * 100;
-        let formattedHighScore = `%${floatHighScore2}`;
+        let formattedHighScore = `${floatHighScore2}%`;
         if (highScore) {
-            $('#high_score').text(`High Score: %${floatHighScore2}`);
+            $('#high_score').text(`high score: ${floatHighScore2}%`);
         }
     }
 
@@ -65,9 +65,13 @@ $(document).ready(function () {
         if (currentScore > highScore) {
             localStorage.setItem('highScore', currentScore.toString());
             console.log("New high score:", currentScore * 100);
+            $('#correct').text(`correct: ${currentScore * 100}%`)
             // Reset clicks for a new game session
             amtClicks = 0;
             correctClicks = 0;
+        }
+        else {
+
         }
     }
 
