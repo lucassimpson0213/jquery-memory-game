@@ -64,25 +64,25 @@ $(document).ready(function () {
 
     }
 
-
     function displayHighScore() {
-        // If there have been no clicks or there is no high score, don't proceed.
-        if (amtClicks === 0 || !localStorage.getItem('highScore')) {
-            return;
-        }
-
-        // Retrieve the high score from localStorage.
         let highScore = localStorage.getItem('highScore');
-
-        // Update the HTML element designated to show the high score.
-        // Assuming you have an element with the ID 'high_score' for this purpose.
-        $('#high_score').text(`High Score: ${highScore}`);
+        if (highScore) {
+            $('#high_score').text(`High Score: ${highScore}`);
+        }
     }
 
 
-    function storeHighScore(highScore) {
-        localStorage.setItem('highScore', highScore.toString);
+
+    function calculateFinalScore() {
+        let currentScore = correctClicks / amtClicks; // Example score calculation
+        let highScore = localStorage.getItem('highScore') ? parseFloat(localStorage.getItem('highScore')) : 0;
+
+        if (currentScore > highScore) {
+            localStorage.setItem('highScore', currentScore.toString());
+            console.log("New high score:", currentScore);
+        }
     }
+
 
     let flippedCards = [];
     let amtClicks = 0;
@@ -111,35 +111,61 @@ $(document).ready(function () {
     }
 
     function matchCards() {
-        if (flippedCards.length < 2) {
-            return; // Ensure we have exactly two cards flipped before proceeding.
-        }
+        // Ensure there are exactly two cards flipped before proceeding.
+        if (flippedCards.length < 2) return;
+
+        // Increment the number of attempts each time two cards are flipped.
+        amtClicks++;
 
         const [firstCard, secondCard] = flippedCards;
 
-        // Check if the cards match
-        if (firstCard.attr('id') === secondCard.attr('id')) {
-            amtClicks++;
+        // Extract 'id' for comparison, assuming 'id' stores the path for the image.
+        const firstCardID = firstCard.attr('id');
+        const secondCardID = secondCard.attr('id');
+
+        if (firstCardID === secondCardID) {
+            // Correct guess, increment the count of correct matches.
             correctClicks++;
-            // If the cards match, wait 1 second, then hide them with a sliding motion
+
+            // Apply matched class and visual indication for matched cards.
             setTimeout(() => {
-                firstCard.add(secondCard).find('img').slideUp(500, function () {
-                    $(this).parent().addClass('matched'); // Optionally, hide or visually indicate matched cards
+                firstCard.add(secondCard).addClass('matched').each(function () {
+                    // Optionally, hide them with fadeOut or another effect if needed.
+                    // If removing from view, adjust game end check to account for fewer total cards.
+                    $(this).fadeOut(500);
                 });
-            }, 1000);
+                // Check if the game has ended after this match.
+                checkGameEnd();
+            }, 500); // Adjusted to give immediate feedback after a match is found.
         } else {
-            amtClicks++;
-            
-            // If the cards do not match, wait 2 seconds, fade them out, flip back to the back image, then fade back in
+            // No match, flip them back over with a visual effect.
             setTimeout(() => {
                 firstCard.add(secondCard).find('img').fadeOut(500, function () {
+                    // Reset to the back image.
                     $(this).attr('src', './images/back.png').fadeIn(500);
-                }).removeClass('flipped');
-            }, 2000);
+                });
+            }, 2000); // Provides a moment for players to memorize the cards.
         }
 
-        flippedCards = []; // Reset flipped cards array for the next turn
+        // Clear the flippedCards array for the next turn.
+        flippedCards = [];
     }
+
+    function checkGameEnd() {
+        // Assuming each card has a class 'card', and matched cards get an additional class 'matched'
+        const totalCards = $('.card').length;
+        const matchedCards = $('.matched').length;
+
+        // The game ends when all cards are matched.
+        if (matchedCards === totalCards) {
+            // Game completion logic, such as displaying a message, calculating scores, etc.
+            calculateFinalScore();
+            displayHighScore();
+            // Optionally, prompt for a new game or display a "Game Over" message.
+        }
+    }
+
+
 
    
 
