@@ -53,7 +53,7 @@ $(document).ready(function () {
         let floatHighScore2 = floatHighScore * 100;
         let formattedHighScore = `%${floatHighScore2}`;
         if (highScore) {
-            $('#high_score').text(`High Score: ${floatHighScore2}`);
+            $('#high_score').text(`High Score: %${floatHighScore2}`);
         }
     }
 
